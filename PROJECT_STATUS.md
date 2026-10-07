@@ -2,11 +2,11 @@
 
 ## Current Phase
 
-PHASE 5C — MYSQL INSTALLATION AND VERIFICATION (COMPLETE)
+PHASE 6 — PROJECT SCAFFOLD AND BACKEND/FRONTEND INITIALIZATION
 
 ## Current State
 
-LOCAL_TOOLCHAIN_READY
+PROJECT_SCAFFOLD_READY
 
 ## Product
 
@@ -35,10 +35,10 @@ Documents: `docs/00-project/mvp-scope.md`, `docs/00-project/business-rules.md`, 
 
 Node: 24.21.0 APPROVED (installed)  
 npm: 11.19.0 APPROVED (installed)  
-Frontend Tooling: React + Vite 8.x  
+Frontend Tooling: React + Vite 8.x (JavaScript; initialized: React 19.3.0, React DOM 19.3.0, Vite 8.3.3)  
 Java: 21 LTS, INSTALLED: Eclipse Temurin 21.0.12.1+1 (JAVA_HOME set by installer at Machine level)  
-Spring Boot: 3.5.16  
-Build Tool: Maven + Maven Wrapper  
+Spring Boot: 3.5.16 (initialized, pinned in `backend/pom.xml`; Java 21)  
+Build Tool: Maven + Maven Wrapper (Maven 3.9.16 via wrapper)  
 Global Maven: not required  
 Gradle: not used  
 MySQL: 8.4 LTS  
@@ -75,11 +75,11 @@ Assignment requirement: Render MySQL. Required engine: MySQL. Current deployment
 
 ## Last Completed Task
 
-PHASE 5C MySQL 8.4.9 installation and verification
+PHASE 6 project scaffold and backend/frontend initialization
 
 ## Last Verification
 
-Phase 5C on 2026-10-07: fresh terminal `java`/`javac` 21.0.12.1 Temurin, JAVA_HOME set. `winget install --id Oracle.MySQL --exact --source winget` installed 8.4.9 (hash verified); `mysql.exe` and `mysqld.exe` report 8.4.9. Service `MySQL84` Running, StartType Automatic. Port 3306 Listen. User verified `mysql -u root -p` login and `SELECT VERSION()` = 8.4.9 (password not recorded). No database, schema, table or application user created. No remote, nothing pushed. `prompt.md` gitignored.
+Phase 6 on 2026-10-07: `frontend/` created with `create-vite` 9.2.1 (React, JavaScript); installed react 19.3.0, react-dom 19.3.0, vite 8.3.3 (npm stable `latest` 8.3.3). `npm run build` PASS, `npm run lint` (oxlint) PASS, exit 0. `backend/` obtained from Spring Initializr (Maven, Jar, Java 21, `com.spacereservation:backend`, Spring Web + Validation). Spring Initializr no longer directly generates Spring Boot 3.5.16 (its supported range is now >=4.0.0; HTTP 400 on a 3.5.16 request). A supported scaffold version (4.0.8) was used only to obtain the project structure and Maven Wrapper; the generated `pom.xml` was then pinned to 3.5.16 and the 4.x-specific starters were replaced (`spring-boot-starter-webmvc` -> `spring-boot-starter-web`; `spring-boot-starter-validation-test` and `spring-boot-starter-webmvc-test` -> `spring-boot-starter-test`). The final verified project is Spring Boot 3.5.16. `mvnw.cmd -v`: Apache Maven 3.9.16, Java 21.0.12.1. `mvnw.cmd test` PASS (1 test), `mvnw.cmd package` PASS (`backend-0.0.1-SNAPSHOT.jar`). MySQL 8.4.9 installed; application database NOT CREATED; no datasource configured. No remote, nothing pushed. `prompt.md` gitignored; `CLAUDE.md` unchanged.
 
 ## Known Blockers
 
@@ -88,7 +88,7 @@ Phase 5C on 2026-10-07: fresh terminal `java`/`javac` 21.0.12.1 Temurin, JAVA_HO
 
 ## Next Approved Task
 
-PHASE 6 — PROJECT SCAFFOLD AND BACKEND/FRONTEND INITIALIZATION
+PHASE 7 — BACKEND DATA MODEL AND MYSQL INTEGRATION
 
 ## Do Not Start Yet
 
