@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-PHASE 9 — INTEGRATION AND MERGE (COMPLETE)
+PHASE 10 — LOCAL END-TO-END VERIFICATION (COMPLETE)
 
 ## Current State
 
@@ -85,11 +85,13 @@ Assignment requirement: Render MySQL. Required engine: MySQL. Current deployment
 
 ## Last Completed Task
 
-PHASE 9 integration and merge
+PHASE 10 local end-to-end verification (frontend -> backend -> MySQL)
 
 ## Last Verification
 
 Phase 9 on 2026-10-07 (executed): merged `feat/backend-core` (248ae3c), `feat/frontend-core` (a2c89c6) and `feat/deploy-prep` (337b541) into `main` with `--no-ff`, no conflicts. Frontend: `npm install` OK (0 vulnerabilities), `npm run lint` PASS (exit 0), `npm run build` PASS. Backend: `.\mvnw.cmd test` PASS (26 tests, 0 failures, 0 errors, 0 skipped) against the local MySQL test schema (`DB_PASSWORD` from the user environment, never committed); `.\mvnw.cmd package` PASS (`backend-0.0.1-SNAPSHOT.jar`). Not executed: browser/manual end-to-end run of the frontend against the backend, container build, any deployment. No remote, nothing pushed. `prompt.md` gitignored; `CLAUDE.md` unchanged.
+
+Phase 10 on 2026-10-07 (executed): backend jar run locally on :8080 (process-only `JWT_SECRET`, `ADMIN_*`, `FRONTEND_ORIGIN`; `DB_PASSWORD` from the user environment) and Vite dev server on :5173 with `VITE_API_BASE_URL=http://localhost:8080/api`. 71 HTTP checks against the live backend/MySQL (script not committed): 70 passed; the 1 reported failure (admin DELETE with an `Origin` header returned 403 from the CORS filter instead of 404) was a test-expectation artifact, re-checked without `Origin` -> 404 and the row was unchanged. 11 checks of the real frontend `client.js`/`endpoints.js` (as served by Vite) against the live backend: all passed (Bearer header sent, bare arrays, 400/403/404/409 message mapping, 401 clears the session, login failure does not, network error). Covered: register/login, JWT HS256 3600 s, spaces, availability, create/overlap-409/adjacent/modify/cancel, cancelled slot reusable, past reservation 409 and hidden actions logic, inactive space 409, admin create/edit/deactivate/reactivate, admin reservations read-only, role enforcement 403 both ways, CORS preflight (PATCH allowed, other origin rejected), expired/forged/garbage tokens 401. NOT covered (manual browser verification still required): actual rendering and click-through of the pages, redirect to /login after 401 in the UI, visibility of Modify/Cancel buttons, date-picker and time-select behavior. Temporary data removed (members/spaces/reservations back to 0; schema and Flyway history intact); backend and frontend processes stopped. After the run: frontend lint PASS, build PASS; backend test PASS (26 tests, 0 failures, 0 skipped), package PASS.
 
 ## Known Blockers
 
@@ -98,7 +100,7 @@ Phase 9 on 2026-10-07 (executed): merged `feat/backend-core` (248ae3c), `feat/fr
 
 ## Next Approved Task
 
-NONE DEFINED — awaiting approval (candidates: Google Stitch UI application, manual end-to-end verification, deployment once production MySQL is decided)
+NONE DEFINED — awaiting approval (candidates: manual browser verification, Google Stitch UI application, deployment once production MySQL is decided)
 
 ## Do Not Start Yet
 
