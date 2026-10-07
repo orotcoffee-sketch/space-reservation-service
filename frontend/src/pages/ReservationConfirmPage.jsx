@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { reservationsApi, spacesApi } from '../api/endpoints.js'
 import { Async, ErrorMessage } from '../components/Status.jsx'
+import { EmptyState, Icon, SpaceImage } from '../components/ui.jsx'
 import { useLoad } from '../hooks.js'
+import { durationLabel, durationMinutes, fmt12, fmtDateLong } from '../time.js'
 
 export default function ReservationConfirmPage() {
   const [params] = useSearchParams()
@@ -17,9 +19,17 @@ export default function ReservationConfirmPage() {
 
   if (!spaceId || !date || !start || !end) {
     return (
-      <p>
-        Missing reservation details. <Link to="/spaces">Choose a space</Link>.
-      </p>
+      <EmptyState
+        icon="event_busy"
+        title="Missing reservation details"
+        action={
+          <Link to="/spaces" className="btn btn-primary">
+            Choose a space
+          </Link>
+        }
+      >
+        Pick a space, date and time to continue.
+      </EmptyState>
     )
   }
 
@@ -40,30 +50,95 @@ export default function ReservationConfirmPage() {
     }
   }
 
+  const minutes = durationMinutes(start, end)
+
   return (
     <section>
-      <h1>Confirm reservation</h1>
-      <Async state={space}>
-        {(s) => (
-          <dl>
-            <dt>Space</dt>
-            <dd>{s.name}</dd>
-            <dt>Location</dt>
-            <dd>{s.location}</dd>
-            <dt>Date</dt>
-            <dd>{date}</dd>
-            <dt>Time</dt>
-            <dd>
-              {start} – {end}
-            </dd>
-          </dl>
-        )}
-      </Async>
-      <ErrorMessage error={error} />
-      <button type="button" onClick={onConfirm} disabled={busy || !space.data}>
-        Confirm reservation
-      </button>{' '}
-      <Link to={`/spaces/${spaceId}`}>Back</Link>
+      <nav className="crumbs" aria-label="Breadcrumb">
+        <Link to="/spaces">Spaces</Link>
+        <Icon name="chevron_right" />
+        <Link to={`/spaces/${spaceId}`}>{space.data?.name ?? 'Space'}</Link>
+        <Icon name="chevron_right" />
+        <span className="current">Confirm</span>
+      </nav>
+      <div className="page-head">
+        <h1>Confirm Your Reservation</h1>
+        <p className="sub">Please review your booking details before confirming your reservation.</p>
+      </div>
+
+      <div className="confirm-layout">
+        <div className="card" style={{ overflow: 'hidden' }}>
+          <Async state={space}>
+            {(s) => (
+              <>
+                <div className={`confirm-hero media${s.imageUrl ? '' : ' noimg'}`}>
+                  <SpaceImage src={s.imageUrl} />
+                  {s.imageUrl && <div className="shade" />}
+                  <div className="caption">
+                    <small>
+                      <Icon name="location_on" size="sm" />
+                      {s.location}
+                    </small>
+                    <h2>{s.name}</h2>
+                  </div>
+                </div>
+                <div className="facts">
+                  <div className="fact">
+                    <small>Capacity</small>
+                    <strong>
+                      <Icon name="group" />
+                      {s.capacity} People
+                    </strong>
+                  </div>
+                  <div className="fact">
+                    <small>Location</small>
+                    <strong>
+                      <Icon name="location_on" />
+                      {s.location}
+                    </strong>
+                  </div>
+                </div>
+              </>
+            )}
+          </Async>
+        </div>
+
+        <aside className="card">
+          <div className="summary-head">Reservation Summary</div>
+          <div className="summary-body">
+            <div className="sum-tile">
+              <div className="ico">
+                <Icon name="calendar_month" />
+              </div>
+              <div>
+                <small>Date</small>
+                <strong>{fmtDateLong(date)}</strong>
+              </div>
+            </div>
+            <div className="sum-tile">
+              <div className="ico">
+                <Icon name="schedule" />
+              </div>
+              <div>
+                <small>Time Window</small>
+                <strong>
+                  {fmt12(start)} – {fmt12(end)}
+                </strong>
+                {minutes > 0 && <span className="note">Duration: {durationLabel(minutes)}</span>}
+              </div>
+            </div>
+            <ErrorMessage error={error} />
+            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={onConfirm} disabled={busy || !space.data}>
+              <Icon name="check_circle" size="sm" />
+              Confirm Reservation
+            </button>
+            <Link to={`/spaces/${spaceId}`} className="btn btn-secondary btn-lg btn-block">
+              <Icon name="arrow_back" size="sm" />
+              Back / Change Time
+            </Link>
+          </div>
+        </aside>
+      </div>
     </section>
   )
 }
