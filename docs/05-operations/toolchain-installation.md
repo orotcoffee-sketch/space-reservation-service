@@ -1,6 +1,6 @@
 # Toolchain Installation Plan
 
-Status: PLAN ONLY. Nothing in this document has been executed. Decisions: `docs/06-decisions/ADR-0002-toolchain.md`.
+Status: JDK 21 INSTALLED (Phase 5B, `EclipseAdoptium.Temurin.21.JDK` 21.0.12.101; JAVA_HOME `C:\Program Files\Eclipse Adoptium\jdk-21.0.12.101-hotspot\`). MySQL: PLAN ONLY, not installed. Decisions: `docs/06-decisions/ADR-0002-toolchain.md`.
 
 ## Already Installed
 
@@ -47,12 +47,14 @@ The wrapper is the authoritative Maven runtime. Gradle is not used and must not 
 
 Required:
 
-- MySQL Community Server 8.4.11
+- MySQL Community Server 8.4 LTS (any current 8.4.x patch; record the installed version)
 - Windows x64 MSI
 - MySQL Configurator
 - Windows Service
 
-Winget discovery (2026-10-07): `Oracle.MySQL` exists, but its newest 8.4 version is 8.4.9 (also 8.4.8, 8.4.6, and 8.0.x). It does not provide the 8.4.11 target, so the plan is: `Use official MySQL Community Server 8.4 MSI`. Do not substitute MySQL 8.0, MariaDB, PostgreSQL or SQLite.
+Winget discovery (2026-10-07): `Oracle.MySQL` exists; newest offered version is 8.4.9 (installer is the official `mysql-8.4.9-winx64.msi`). It is an 8.4 LTS patch, so it is acceptable, as is the official MySQL Community Server 8.4 MSI. Do not substitute MySQL 8.0, MariaDB, PostgreSQL or SQLite.
+
+Installation involves interactive MySQL Configurator steps (root password, service, authentication) that the user must complete.
 
 No password is recorded in this document. The root password is chosen by the user at install time and kept out of Git.
 

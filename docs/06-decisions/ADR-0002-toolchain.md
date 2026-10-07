@@ -14,7 +14,7 @@ The assignment stack is fixed (React, Spring Boot, MySQL, Git/GitHub, Vercel, Re
 - Java 21 LTS, full JDK; preferred distribution Eclipse Temurin JDK 21
 - Spring Boot 3.5.16 (no silent move to 4.x; downgrade only for a verified compatibility blocker)
 - Maven with Maven Wrapper (`mvnw`, `mvnw.cmd`, `.mvn/`)
-- MySQL 8.4 LTS; local target MySQL Community Server 8.4.11
+- MySQL 8.4 LTS; the project does not depend on one patch release. Local patch version: record the actually installed 8.4.x version (Phase 5 had named 8.4.11 as a target; that is not binding)
 - Business timezone `Asia/Seoul` (see BR-014)
 
 ## Rationale
@@ -32,9 +32,10 @@ The assignment stack is fixed (React, Spring Boot, MySQL, Git/GitHub, Vercel, Re
 - Spring Boot 4.x: not approved.
 - Create React App: rejected.
 - MySQL 8.0 for easier installer availability: rejected.
+- Pinning MySQL to 8.4.11 specifically: dropped; any current 8.4.x LTS patch is acceptable.
 
 ## Consequences
 
-- JDK 21 and MySQL 8.4.11 are not yet installed; installation is a separate controlled phase (`docs/05-operations/toolchain-installation.md`).
-- The toolchain is not fully operational until those are installed and verified.
+- JDK 21 was installed in Phase 5B; MySQL 8.4 is not yet installed (`docs/05-operations/toolchain-installation.md`).
+- The toolchain is not fully operational until MySQL is installed and verified.
 - Production MySQL on Render remains OPEN (see ADR-0001).

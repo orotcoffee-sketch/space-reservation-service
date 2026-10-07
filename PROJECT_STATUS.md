@@ -6,7 +6,7 @@ PHASE 5 — TOOLCHAIN LOCK AND INSTALLATION PLAN
 
 ## Current State
 
-TOOLCHAIN_LOCKED_INSTALLATION_PENDING
+TOOLCHAIN_PARTIALLY_OPERATIONAL
 
 ## Product
 
@@ -36,19 +36,19 @@ Documents: `docs/00-project/mvp-scope.md`, `docs/00-project/business-rules.md`, 
 Node: 24.21.0 APPROVED (installed)  
 npm: 11.19.0 APPROVED (installed)  
 Frontend Tooling: React + Vite 8.x  
-Java: 21 LTS (Eclipse Temurin JDK preferred)  
+Java: 21 LTS, INSTALLED: Eclipse Temurin 21.0.12.1+1 (JAVA_HOME set by installer at Machine level)  
 Spring Boot: 3.5.16  
 Build Tool: Maven + Maven Wrapper  
 Global Maven: not required  
 Gradle: not used  
 MySQL: 8.4 LTS  
-Local MySQL target: 8.4.11 (official MSI; winget `Oracle.MySQL` only offers 8.4.9)  
+Local MySQL patch: record the actually installed 8.4.x (winget `Oracle.MySQL` offers 8.4.9; official 8.4 MSI also acceptable)  
 Winget JDK package: `EclipseAdoptium.Temurin.21.JDK`  
 Decision record: `docs/06-decisions/ADR-0002-toolchain.md`; plan: `docs/05-operations/toolchain-installation.md`
 
 ## Toolchain State
 
-NOT fully operational: JDK 21 and MySQL 8.4 are not installed.
+TOOLCHAIN_PARTIALLY_OPERATIONAL: JDK 21 installed and verified; MySQL 8.4 LTS not installed.
 
 ## Fixed Stack
 
@@ -75,20 +75,19 @@ Assignment requirement: Render MySQL. Required engine: MySQL. Current deployment
 
 ## Last Completed Task
 
-PHASE 5 toolchain lock and installation plan (documentation only; nothing installed)
+PHASE 5B toolchain cleanup and JDK 21 installation
 
 ## Last Verification
 
-Phase 5 on 2026-10-07: `node --version` v24.21.0, `npm --version` 11.19.0, `git --version` 2.56.0.windows.1, winget v1.29.380. `java` and `javac` not found. Winget search (source `winget`): `EclipseAdoptium.Temurin.21.JDK` found; `Oracle.MySQL` max 8.4.9 (target 8.4.11 not available). No remote, nothing pushed. `prompt.md` gitignored. No code, dependencies, SQL or schema created.
+Phase 5B on 2026-10-07: `winget install EclipseAdoptium.Temurin.21.JDK` succeeded (installer hash verified). Via full path: `java -version` openjdk 21.0.12.1 Temurin LTS, `javac -version` 21.0.12.1. Machine `JAVA_HOME` and Machine `PATH` contain the JDK; the already-running shell does not see them (new terminal needed). `Oracle.MySQL` offers 8.4.9; MySQL not installed. No remote, nothing pushed. `prompt.md` gitignored. No code, dependencies, SQL or schema created.
 
 ## Known Blockers
 
-- JDK 21 not installed (backend cannot be built).
-- MySQL 8.4 not installed (server access not tested).
+- MYSQL_LOCAL_REQUIRED: MySQL 8.4 LTS not installed.
 
 ## Next Approved Task
 
-PHASE 5B — INSTALL AND VERIFY LOCAL TOOLCHAIN
+PHASE 5C — MYSQL INSTALLATION AND VERIFICATION
 
 ## Do Not Start Yet
 
