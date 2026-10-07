@@ -1,4 +1,12 @@
-body {
-  margin: 0;
-  font-family: system-ui, sans-serif;
-}
+body { margin: 0; font-family: system-ui, sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 1rem; }
+.nav { display: flex; justify-content: space-between; align-items: center; padding: .5rem 1rem; border-bottom: 1px solid #ccc; }
+.nav nav { display: flex; gap: 1rem; align-items: center; }
+.error { color: #b00020; }
+form label { display: block; margin: .5rem 0; }
+form input, form select, form textarea { display: block; min-width: 16rem; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #ddd; padding: .4rem; text-align: left; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; padding: 0; list-style: none; }
+.card { border: 1px solid #ddd; padding: .75rem; }
+.card img, .detail img { max-width: 100%; max-height: 180px; }
