@@ -1,0 +1,25 @@
+# Build output
+target/
+!target/.gitkeep
+
+# VCS / IDE
+.git
+.gitignore
+.gitattributes
+.idea/
+.vscode/
+*.iml
+
+# Secrets / environment
+.env
+.env.*
+*.pem
+*.key
+
+# Logs
+*.log
+logs/
+
+# Docker files themselves
+Dockerfile
+.dockerignore
