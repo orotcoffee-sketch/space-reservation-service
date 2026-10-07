@@ -2,23 +2,24 @@
 
 ## Current Phase
 
-PHASE 6 — PROJECT SCAFFOLD AND BACKEND/FRONTEND INITIALIZATION
+PHASE 9 — INTEGRATION AND MERGE (COMPLETE)
 
 ## Current State
 
-PROJECT_SCAFFOLD_READY
+INTEGRATED_MVP_LOCAL_VERIFIED
 
 ## Product
 
 Product: Space Reservation Service  
 Access Model: Registered members only  
 Roles: MEMBER / ADMIN  
-Authentication: JWT Bearer access token (implementation not started)  
+Authentication: JWT Bearer access token — IMPLEMENTED (Spring Security OAuth2 Resource Server / Nimbus, HS256, `JWT_SECRET` min 32 bytes from environment)  
 Refresh Token: OUT OF MVP  
-Token Lifetime: 60 minutes planned  
-Frontend token storage: sessionStorage planned  
-Password: BCrypt planned  
-Admin provisioning: environment bootstrap planned  
+Token Lifetime: 60 minutes (`app.jwt.expiration-minutes`)  
+Frontend token storage: sessionStorage (key `auth`) — IMPLEMENTED  
+Password: BCrypt — IMPLEMENTED  
+Admin provisioning: environment bootstrap (`ADMIN_EMAIL`, `ADMIN_INITIAL_PASSWORD`, idempotent) — IMPLEMENTED  
+Migrations: Flyway (`backend/src/main/resources/db/migration`, V1 core schema) — IN USE  
 API base: /api  
 Contracts: `docs/02-contracts/api-contract.md`, `auth-architecture.md`, `authorization-matrix.md`, `screen-api-map.md`, `error-contract.md`  
 Reservation granularity: 30 minutes  
@@ -50,6 +51,14 @@ Decision record: `docs/06-decisions/ADR-0002-toolchain.md`; plan: `docs/05-opera
 
 LOCAL_TOOLCHAIN_READY: JDK 21 and MySQL 8.4.9 installed and verified.
 
+## Implementation State
+
+- Backend MVP: IMPLEMENTED on `feat/backend-core`, commit `248ae3c` (auth, spaces, reservations, admin endpoints; Flyway; Spring Security + Nimbus JWT HS256, 60-minute access token). Tests use a dedicated local MySQL schema (no H2).
+- Frontend MVP: IMPLEMENTED on `feat/frontend-core`, commit `a2c89c6` (React + Vite, react-router-dom; unstyled functional UI; Google Stitch design NOT applied yet).
+- Deployment prep: `feat/deploy-prep`, commit `337b541` (`backend/Dockerfile`, `backend/.dockerignore`, `frontend/vercel.json`). Not deployed.
+- API integration contract: VERIFIED by static audit of the frontend against the actual backend DTOs/controllers; documented in `docs/02-contracts/api-contract.md`.
+- Phase 9: all three branches merged into `main` with `--no-ff` (no conflicts); four frontend polish fixes applied (register/admin-space field limits, past-reservation actions hidden, Asia/Seoul date handling); frontend lint/build and backend test/package executed and passing (see Last Verification).
+
 ## Fixed Stack
 
 Frontend: React  
@@ -62,10 +71,11 @@ Database Deployment Requirement: Render MySQL (assignment); feasibility UNRESOLV
 
 ## Open Decisions
 
-- JWT library and signing algorithm
 - production MySQL deployment (assignment requires Render MySQL; free feasibility UNRESOLVED)
 
-Do not resolve these silently.
+Resolved in Phases 7-9: JWT library and signing algorithm = Spring Security OAuth2 Resource Server (Nimbus), HS256.
+
+Do not resolve open items silently.
 
 ## Known Deployment Constraint
 
@@ -75,11 +85,11 @@ Assignment requirement: Render MySQL. Required engine: MySQL. Current deployment
 
 ## Last Completed Task
 
-PHASE 6 project scaffold and backend/frontend initialization
+PHASE 9 integration and merge
 
 ## Last Verification
 
-Phase 6 on 2026-10-07: `frontend/` created with `create-vite` 9.2.1 (React, JavaScript); installed react 19.3.0, react-dom 19.3.0, vite 8.3.3 (npm stable `latest` 8.3.3). `npm run build` PASS, `npm run lint` (oxlint) PASS, exit 0. `backend/` obtained from Spring Initializr (Maven, Jar, Java 21, `com.spacereservation:backend`, Spring Web + Validation). Spring Initializr no longer directly generates Spring Boot 3.5.16 (its supported range is now >=4.0.0; HTTP 400 on a 3.5.16 request). A supported scaffold version (4.0.8) was used only to obtain the project structure and Maven Wrapper; the generated `pom.xml` was then pinned to 3.5.16 and the 4.x-specific starters were replaced (`spring-boot-starter-webmvc` -> `spring-boot-starter-web`; `spring-boot-starter-validation-test` and `spring-boot-starter-webmvc-test` -> `spring-boot-starter-test`). The final verified project is Spring Boot 3.5.16. `mvnw.cmd -v`: Apache Maven 3.9.16, Java 21.0.12.1. `mvnw.cmd test` PASS (1 test), `mvnw.cmd package` PASS (`backend-0.0.1-SNAPSHOT.jar`). MySQL 8.4.9 installed; application database NOT CREATED; no datasource configured. No remote, nothing pushed. `prompt.md` gitignored; `CLAUDE.md` unchanged.
+Phase 9 on 2026-10-07 (executed): merged `feat/backend-core` (248ae3c), `feat/frontend-core` (a2c89c6) and `feat/deploy-prep` (337b541) into `main` with `--no-ff`, no conflicts. Frontend: `npm install` OK (0 vulnerabilities), `npm run lint` PASS (exit 0), `npm run build` PASS. Backend: `.\mvnw.cmd test` PASS (26 tests, 0 failures, 0 errors, 0 skipped) against the local MySQL test schema (`DB_PASSWORD` from the user environment, never committed); `.\mvnw.cmd package` PASS (`backend-0.0.1-SNAPSHOT.jar`). Not executed: browser/manual end-to-end run of the frontend against the backend, container build, any deployment. No remote, nothing pushed. `prompt.md` gitignored; `CLAUDE.md` unchanged.
 
 ## Known Blockers
 
@@ -88,13 +98,10 @@ Phase 6 on 2026-10-07: `frontend/` created with `create-vite` 9.2.1 (React, Java
 
 ## Next Approved Task
 
-PHASE 7 — BACKEND DATA MODEL AND MYSQL INTEGRATION
+NONE DEFINED — awaiting approval (candidates: Google Stitch UI application, manual end-to-end verification, deployment once production MySQL is decided)
 
 ## Do Not Start Yet
 
-- application feature implementation
-- database schema/migration creation
-- authentication implementation
-- UI implementation
-- API implementation
-- production deployment
+- Google Stitch UI implementation
+- production deployment (production MySQL on Render OPEN)
+- features outside `docs/00-project/mvp-scope.md`

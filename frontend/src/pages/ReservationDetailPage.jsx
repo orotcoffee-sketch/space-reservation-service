@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { reservationsApi } from '../api/endpoints.js'
 import { Async, ErrorMessage } from '../components/Status.jsx'
 import { useLoad } from '../hooks.js'
-import { hhmm, TIME_OPTIONS } from '../time.js'
+import { hhmm, isPastStart, TIME_OPTIONS } from '../time.js'
 
 function EditForm({ reservation, onSaved, onCancel }) {
   const [form, setForm] = useState({
@@ -110,7 +110,8 @@ export default function ReservationDetailPage() {
                   }}
                 />
               ) : (
-                r.status === 'CONFIRMED' && (
+                r.status === 'CONFIRMED' &&
+                !isPastStart(r.reservationDate, r.startTime) && (
                   <>
                     <button type="button" onClick={() => setEditing(true)}>
                       Modify

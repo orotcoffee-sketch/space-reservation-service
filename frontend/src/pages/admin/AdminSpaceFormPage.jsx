@@ -38,15 +38,15 @@ function SpaceForm({ space, onSubmit }) {
     <form onSubmit={submit}>
       <label>
         Name
-        <input required value={form.name} onChange={set('name')} />
+        <input required maxLength={100} value={form.name} onChange={set('name')} />
       </label>
       <label>
         Description
-        <textarea required value={form.description} onChange={set('description')} />
+        <textarea required maxLength={5000} value={form.description} onChange={set('description')} />
       </label>
       <label>
         Location
-        <input required value={form.location} onChange={set('location')} />
+        <input required maxLength={200} value={form.location} onChange={set('location')} />
       </label>
       <label>
         Capacity
@@ -54,7 +54,7 @@ function SpaceForm({ space, onSubmit }) {
       </label>
       <label>
         Image URL (optional)
-        <input value={form.imageUrl} onChange={set('imageUrl')} />
+        <input maxLength={500} value={form.imageUrl} onChange={set('imageUrl')} />
       </label>
       <ErrorMessage error={error} />
       <button type="submit" disabled={busy}>

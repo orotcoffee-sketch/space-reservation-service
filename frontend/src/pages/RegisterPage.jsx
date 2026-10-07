@@ -30,15 +30,22 @@ export default function RegisterPage() {
       <form onSubmit={onSubmit}>
         <label>
           Name
-          <input required value={form.name} onChange={set('name')} />
+          <input required maxLength={100} value={form.name} onChange={set('name')} />
         </label>
         <label>
           Email
-          <input type="email" required value={form.email} onChange={set('email')} />
+          <input type="email" required maxLength={255} value={form.email} onChange={set('email')} />
         </label>
         <label>
           Password
-          <input type="password" required value={form.password} onChange={set('password')} />
+          <input
+            type="password"
+            required
+            minLength={8}
+            maxLength={72}
+            value={form.password}
+            onChange={set('password')}
+          />
         </label>
         <ErrorMessage error={error} />
         <button type="submit" disabled={busy}>
