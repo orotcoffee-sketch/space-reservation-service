@@ -2,11 +2,11 @@
 
 ## Current Phase
 
-PHASE 5 — TOOLCHAIN LOCK AND INSTALLATION PLAN
+PHASE 5C — MYSQL INSTALLATION AND VERIFICATION (COMPLETE)
 
 ## Current State
 
-TOOLCHAIN_PARTIALLY_OPERATIONAL
+LOCAL_TOOLCHAIN_READY
 
 ## Product
 
@@ -42,13 +42,13 @@ Build Tool: Maven + Maven Wrapper
 Global Maven: not required  
 Gradle: not used  
 MySQL: 8.4 LTS  
-Local MySQL patch: record the actually installed 8.4.x (winget `Oracle.MySQL` offers 8.4.9; official 8.4 MSI also acceptable)  
+Local MySQL patch: 8.4.9 INSTALLED (winget `Oracle.MySQL`), service `MySQL84` Running/Automatic, port 3306  
 Winget JDK package: `EclipseAdoptium.Temurin.21.JDK`  
 Decision record: `docs/06-decisions/ADR-0002-toolchain.md`; plan: `docs/05-operations/toolchain-installation.md`
 
 ## Toolchain State
 
-TOOLCHAIN_PARTIALLY_OPERATIONAL: JDK 21 installed and verified; MySQL 8.4 LTS not installed.
+LOCAL_TOOLCHAIN_READY: JDK 21 and MySQL 8.4.9 installed and verified.
 
 ## Fixed Stack
 
@@ -75,19 +75,20 @@ Assignment requirement: Render MySQL. Required engine: MySQL. Current deployment
 
 ## Last Completed Task
 
-PHASE 5B toolchain cleanup and JDK 21 installation
+PHASE 5C MySQL 8.4.9 installation and verification
 
 ## Last Verification
 
-Phase 5B on 2026-10-07: `winget install EclipseAdoptium.Temurin.21.JDK` succeeded (installer hash verified). Via full path: `java -version` openjdk 21.0.12.1 Temurin LTS, `javac -version` 21.0.12.1. Machine `JAVA_HOME` and Machine `PATH` contain the JDK; the already-running shell does not see them (new terminal needed). `Oracle.MySQL` offers 8.4.9; MySQL not installed. No remote, nothing pushed. `prompt.md` gitignored. No code, dependencies, SQL or schema created.
+Phase 5C on 2026-10-07: fresh terminal `java`/`javac` 21.0.12.1 Temurin, JAVA_HOME set. `winget install --id Oracle.MySQL --exact --source winget` installed 8.4.9 (hash verified); `mysql.exe` and `mysqld.exe` report 8.4.9. Service `MySQL84` Running, StartType Automatic. Port 3306 Listen. User verified `mysql -u root -p` login and `SELECT VERSION()` = 8.4.9 (password not recorded). No database, schema, table or application user created. No remote, nothing pushed. `prompt.md` gitignored.
 
 ## Known Blockers
 
-- MYSQL_LOCAL_REQUIRED: MySQL 8.4 LTS not installed.
+- Toolchain blockers: NONE
+- Production: Render MySQL free-tier feasibility UNRESOLVED
 
 ## Next Approved Task
 
-PHASE 5C — MYSQL INSTALLATION AND VERIFICATION
+PHASE 6 — PROJECT SCAFFOLD AND BACKEND/FRONTEND INITIALIZATION
 
 ## Do Not Start Yet
 

@@ -1,6 +1,6 @@
 # Local Development
 
-Status: Toolchain versions APPROVED (Phase 5). JDK 21 INSTALLED and verified (Phase 5B). MySQL is NOT yet installed. Setup instructions are NOT yet written (frontend/backend not initialized). Installation plan: `toolchain-installation.md`.
+Status: LOCAL_TOOLCHAIN_READY (Phase 5C). JDK 21 and MySQL 8.4.9 installed and verified. Setup instructions are NOT yet written (frontend/backend not initialized). Installation plan: `toolchain-installation.md`.
 
 ## Verified Environment
 
@@ -23,7 +23,7 @@ Verified 2026-10-07 (Phase 1, 1B and 5).
 | Build tool | Maven + Maven Wrapper | APPROVED |
 | Global Maven | not needed | NOT REQUIRED |
 | Gradle | not used | NOT USED |
-| MySQL | 8.4 LTS (record the installed 8.4.x patch) | INSTALLATION REQUIRED |
+| MySQL | 8.4 LTS (installed patch: 8.4.9) | INSTALLED |
 | Business timezone | Asia/Seoul | APPROVED |
 | Git | 2.56.0.windows.1 | AVAILABLE |
 
@@ -37,12 +37,17 @@ Verified 2026-10-07 (Phase 1, 1B and 5).
 | `java` | openjdk 21.0.12.1 (verified via full path) |
 | `javac` | 21.0.12.1 (verified via full path) |
 | `JAVA_HOME` (Machine) | `C:\Program Files\Eclipse Adoptium\jdk-21.0.12.101-hotspot\` |
+| MySQL | 8.4.9 Community Server (winget `Oracle.MySQL`), client and server `Ver 8.4.9` |
+| MySQL service | `MySQL84`, Running, Automatic |
+| MySQL port | 3306, listening |
+| MySQL root login | verified by user (`SELECT VERSION()` returned 8.4.9); password not recorded |
+| Build tool | Maven Wrapper (created in the backend scaffold phase) |
 
-The installer added the JDK `bin` directory to the Machine `PATH`. Shells opened before installation do not see it; open a new terminal for bare `java`/`javac`.
+The installer added the JDK `bin` directory to the Machine `PATH`. Bare `java`/`javac`/`JAVA_HOME` verified in a fresh terminal. `mysql` is not on PATH; use `C:\Program Files\MySQL\MySQL Server 8.4\bin\mysql.exe`.
 
 ## Still Required
 
-- MySQL 8.4 LTS (`mysql` client, server, Windows service): NOT_AVAILABLE (MYSQL_LOCAL_REQUIRED). Winget `Oracle.MySQL` offers 8.4.9; official 8.4 MSI is also acceptable.
+None for the local toolchain. No application database, schema or application user exists yet (backend initialization phase).
 
 ## Remaining Open Infrastructure Issue
 

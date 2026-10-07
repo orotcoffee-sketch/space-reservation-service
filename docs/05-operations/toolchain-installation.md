@@ -1,6 +1,6 @@
 # Toolchain Installation Plan
 
-Status: JDK 21 INSTALLED (Phase 5B, `EclipseAdoptium.Temurin.21.JDK` 21.0.12.101; JAVA_HOME `C:\Program Files\Eclipse Adoptium\jdk-21.0.12.101-hotspot\`). MySQL: PLAN ONLY, not installed. Decisions: `docs/06-decisions/ADR-0002-toolchain.md`.
+Status: JDK 21 INSTALLED (Phase 5B, `EclipseAdoptium.Temurin.21.JDK` 21.0.12.101; JAVA_HOME `C:\Program Files\Eclipse Adoptium\jdk-21.0.12.101-hotspot\`). MySQL 8.4.9 INSTALLED and verified (Phase 5C; service `MySQL84`, port 3306). Decisions: `docs/06-decisions/ADR-0002-toolchain.md`.
 
 ## Already Installed
 
