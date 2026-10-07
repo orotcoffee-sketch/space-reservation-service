@@ -22,7 +22,7 @@ docs/       governance, architecture, contracts, quality, operations, decisions,
 
 ## Current Phase
 
-PHASE 2 — PRODUCT SCOPE AND MVP DEFINITION
+PHASE 4 — API CONTRACT AND AUTHENTICATION ARCHITECTURE
 
 ## Development Status
 

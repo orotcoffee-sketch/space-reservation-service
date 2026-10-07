@@ -94,9 +94,15 @@ See `business-rules.md` (BR-001 to BR-008). Core rule: a space cannot have overl
 
 ## Open Product Decisions
 
-- exact authentication mechanism (JWT/session not decided)
-- reservation time granularity
-- whether past reservations remain visible
-- whether members may edit profile information
-- exact space fields
-- exact reservation status model
+Resolved in Phase 3 (planning level):
+
+- authentication direction: JWT planned (no libraries or implementation selected)
+- reservation time granularity: 30 minutes (BR-009)
+- past reservations: visible, read-only (BR-011)
+- member profile editing: OUT OF MVP
+- space fields and reservation status model: see `docs/03-data/logical-data-model.md` (CONFIRMED / CANCELLED)
+
+Still open:
+
+- ADMIN account provisioning method
+- final JWT design details (Phase 4)

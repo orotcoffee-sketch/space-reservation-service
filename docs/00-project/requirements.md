@@ -59,6 +59,6 @@ Details: `mvp-scope.md`, `business-rules.md`.
 
 ## OPEN
 
-- authentication mechanism (JWT/session): OPEN
+- authentication: JWT planned; design details OPEN (Phase 4)
 - other open product decisions: see `mvp-scope.md`
 - non-functional requirements (performance, availability): OPEN

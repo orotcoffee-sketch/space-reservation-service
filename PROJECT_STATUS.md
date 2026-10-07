@@ -2,22 +2,53 @@
 
 ## Current Phase
 
-PHASE 2 — PRODUCT SCOPE AND MVP DEFINITION
+PHASE 5 — TOOLCHAIN LOCK AND INSTALLATION PLAN
 
 ## Current State
 
-PRODUCT_SCOPE_DEFINED
+TOOLCHAIN_LOCKED_INSTALLATION_PENDING
 
 ## Product
 
-Application Domain: Space Reservation Service  
+Product: Space Reservation Service  
 Access Model: Registered members only  
 Roles: MEMBER / ADMIN  
-Scope documents: `docs/00-project/mvp-scope.md`, `docs/00-project/business-rules.md`  
+Authentication: JWT Bearer access token (implementation not started)  
+Refresh Token: OUT OF MVP  
+Token Lifetime: 60 minutes planned  
+Frontend token storage: sessionStorage planned  
+Password: BCrypt planned  
+Admin provisioning: environment bootstrap planned  
+API base: /api  
+Contracts: `docs/02-contracts/api-contract.md`, `auth-architecture.md`, `authorization-matrix.md`, `screen-api-map.md`, `error-contract.md`  
+Reservation granularity: 30 minutes  
+Past reservation behavior: visible / read-only  
+Business Timezone: Asia/Seoul (BR-014: reservations must start in the future in this timezone)  
+Operating hours: none defined for MVP (do not invent openingTime/closingTime/businessHours without approval)  
+Admin reservation detail endpoint: OUT OF MVP  
+Profile editing: OUT OF MVP  
+Visual design source: Google Stitch  
+Core entities: MEMBER, SPACE, RESERVATION  
+Documents: `docs/00-project/mvp-scope.md`, `docs/00-project/business-rules.md`, `docs/01-architecture/screen-flow.md`, `docs/01-architecture/screen-data-map.md`, `docs/03-data/logical-data-model.md`  
+
+## Approved Toolchain
+
+Node: 24.21.0 APPROVED (installed)  
+npm: 11.19.0 APPROVED (installed)  
+Frontend Tooling: React + Vite 8.x  
+Java: 21 LTS (Eclipse Temurin JDK preferred)  
+Spring Boot: 3.5.16  
+Build Tool: Maven + Maven Wrapper  
+Global Maven: not required  
+Gradle: not used  
+MySQL: 8.4 LTS  
+Local MySQL target: 8.4.11 (official MSI; winget `Oracle.MySQL` only offers 8.4.9)  
+Winget JDK package: `EclipseAdoptium.Temurin.21.JDK`  
+Decision record: `docs/06-decisions/ADR-0002-toolchain.md`; plan: `docs/05-operations/toolchain-installation.md`
 
 ## Toolchain State
 
-TOOLCHAIN_PARTIALLY_VERIFIED (Phase 1; unchanged)
+NOT fully operational: JDK 21 and MySQL 8.4 are not installed.
 
 ## Fixed Stack
 
@@ -31,18 +62,7 @@ Database Deployment Requirement: Render MySQL (assignment); feasibility UNRESOLV
 
 ## Open Decisions
 
-- exact authentication mechanism (JWT/session)
-- reservation time granularity
-- whether past reservations remain visible
-- whether members may edit profile information
-- exact space fields
-- exact reservation status model
-- frontend build tooling/version
-- Java version
-- Spring Boot version
-- Maven vs Gradle
-- Node version
-- MySQL version
+- JWT library and signing algorithm
 - production MySQL deployment (assignment requires Render MySQL; free feasibility UNRESOLVED)
 
 Do not resolve these silently.
@@ -55,23 +75,20 @@ Assignment requirement: Render MySQL. Required engine: MySQL. Current deployment
 
 ## Last Completed Task
 
-PHASE 2 product scope and MVP definition (documentation only)
+PHASE 5 toolchain lock and installation plan (documentation only; nothing installed)
 
 ## Last Verification
 
-Phase 2: documentation review only; no code, dependencies or schema created. Phase 1/1B command output on 2026-10-07: Git 2.56.0.windows.1, Node v24.21.0, npm 11.19.0 AVAILABLE. Java, javac, Maven, Gradle, MySQL client, MySQL server/service NOT_AVAILABLE (PATH, JAVA_HOME, standard dirs, services). Markers: JDK_REQUIRED, MYSQL_LOCAL_REQUIRED; Maven/Gradle choice UNRESOLVED. Details: `docs/05-operations/local-development.md`.
+Phase 5 on 2026-10-07: `node --version` v24.21.0, `npm --version` 11.19.0, `git --version` 2.56.0.windows.1, winget v1.29.380. `java` and `javac` not found. Winget search (source `winget`): `EclipseAdoptium.Temurin.21.JDK` found; `Oracle.MySQL` max 8.4.9 (target 8.4.11 not available). No remote, nothing pushed. `prompt.md` gitignored. No code, dependencies, SQL or schema created.
 
 ## Known Blockers
 
-- JDK_REQUIRED: no Java runtime or javac (backend cannot be built).
-- Neither Maven nor Gradle installed; build-tool decision pending.
-- MYSQL_LOCAL_REQUIRED: no local MySQL client/server (server access not tested).
+- JDK 21 not installed (backend cannot be built).
+- MySQL 8.4 not installed (server access not tested).
 
 ## Next Approved Task
 
-PHASE 3 — SCREEN FLOW AND DATA MODEL PLANNING
-
-Toolchain installation and the initial Git commit remain pending user action; product planning may continue despite them.
+PHASE 5B — INSTALL AND VERIFY LOCAL TOOLCHAIN
 
 ## Do Not Start Yet
 
