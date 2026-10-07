@@ -42,3 +42,41 @@ export function isPastStart(date, startTime) {
 
 // Backend returns HH:mm (tolerate HH:mm:ss).
 export const hhmm = (t) => (t ? t.slice(0, 5) : '')
+
+// ---- display helpers (presentation only; API values stay HH:mm / YYYY-MM-DD) ----
+
+// 13:30 -> "01:30 PM"
+export function fmt12(t) {
+  const [h, m] = hhmm(t).split(':').map(Number)
+  const h12 = h % 12 === 0 ? 12 : h % 12
+  return `${pad(h12)}:${pad(m)} ${h >= 12 ? 'PM' : 'AM'}`
+}
+
+const utcDate = (date) => new Date(`${date}T00:00:00Z`)
+
+export function addDays(date, n) {
+  const d = utcDate(date)
+  d.setUTCDate(d.getUTCDate() + n)
+  return d.toISOString().slice(0, 10)
+}
+
+const dateText = (date, options) => utcDate(date).toLocaleDateString('en-US', { timeZone: 'UTC', ...options })
+
+// "Friday, October 25, 2024"
+export const fmtDateLong = (date) => dateText(date, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+// "Oct 25, 2024"
+export const fmtDateShort = (date) => dateText(date, { year: 'numeric', month: 'short', day: 'numeric' })
+// { top: "Fri", bottom: "Oct 25" }
+export const fmtDateChip = (date) => ({
+  top: dateText(date, { weekday: 'short' }),
+  bottom: dateText(date, { month: 'short', day: 'numeric' }),
+})
+
+export const durationMinutes = (start, end) => toMinutes(hhmm(end)) - toMinutes(hhmm(start))
+
+// 90 -> "1 hr 30 min"
+export function durationLabel(minutes) {
+  const h = Math.floor(minutes / 60)
+  const m = minutes % 60
+  return [h ? `${h} hr` : '', m ? `${m} min` : ''].filter(Boolean).join(' ')
+}
